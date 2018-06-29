@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+// import { withTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -18,6 +19,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import DialogCard from './DialogCard';
+// import blue from '@material-ui/core/colors/blue';
 
 let counter = 0;
 function createData(consignment, order_ref, bookable, booked, booked_date) {
@@ -30,6 +33,22 @@ function getSorting(order, orderBy) {
     ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
     : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1);
 }
+
+
+
+// const TableCell = withStyles(theme => ({
+//   head: {
+//     backgroundColor: theme.palette.common.black,
+//     color: theme.palette.common.white,
+//   },
+//   body: {
+//     fontSize: 24,
+//   },
+// }))(TableCell);
+
+
+
+
 
 const columnData = [
   { id: 'consignment', numeric: false, disablePadding: true, label: 'Consignment' },
@@ -82,6 +101,7 @@ class EnhancedTableHead extends React.Component {
               </TableCell>
             );
           }, this)}
+          <TableCell>&nbsp;</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -298,12 +318,13 @@ class EnhancedTable extends React.Component {
                       <TableCell><Checkbox checked={isSelected} onClick={event => this.handleClick(event, n.id)} /></TableCell>
                       <TableCell><Checkbox checked={isSelected} onClick={event => this.handleClick(event, n.id)} /></TableCell>
                       <TableCell>{n.booked_date}</TableCell>
+                      <TableCell><DialogCard /></TableCell>
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={7} />
                 </TableRow>
               )}
             </TableBody>
@@ -323,6 +344,8 @@ class EnhancedTable extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
+        
+        
       </Paper>
     );
   }
