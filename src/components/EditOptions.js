@@ -9,11 +9,15 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import DatePicker from './DatePicker';
 import Divider from '@material-ui/core/Divider';
+// import { lighten } from '@material-ui/core/styles/colorManipulator';
 
 const styles = theme => ({
   root: {
     padding: theme.spacing.unit * 2,
+    width: '100%',
+    boxSizing: 'border-box',
   },
+
   datePickerContainer: {
     marginTop: theme.spacing.unit * 2,
   }

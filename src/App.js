@@ -1,42 +1,53 @@
 import React, { Component } from 'react';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import Grid from '@material-ui/core/Grid';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
 
 import DeliveryTable from './components/DeliveryTable';
-import SearchBar from './components/SearchBar';
+
 
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#a0f6ff',
-      main: '#6ac3f3',
+      light: '#3384F3',
+      main: '#1e90e5',
       dark: '#2d93c0',
       contrastText: '#fff',
     },
     secondary: {
       light: '#ff8e61',
-      main: '#de5e35',
+      main: '#e65345',
       dark: '#a62d08',
       contrastText: '#fff',
     },
+    background: {
+      default: "#f6f7fb",
+      paper: "#fff",
+    },
+    
   },
 });
+
 
 class App extends Component {
   
   render() {
     return (
       <React.Fragment>
-        <Grid container spacing={24}>
-          <Grid item xs={12}>
+
             <MuiThemeProvider theme={theme}>
-              <SearchBar />
-              <DeliveryTable />
+              <CssBaseline />
+                <div style={{ padding: 20 }}>
+                  <Typography color="primary" variant="headline" gutterBottom align="center">
+                    Delivery Management
+                  </Typography>
+                  
+                    <DeliveryTable />
+                  </div>
             </MuiThemeProvider>
-          </Grid>
-        </Grid>
+          
       </React.Fragment>
     );
   }

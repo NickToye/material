@@ -22,6 +22,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 // import EditOptions from './EditOptions';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
+import Close from '@material-ui/icons/Close';
+import Check from '@material-ui/icons/Check';
+import Typography from '@material-ui/core/Typography';
+import Slide from '@material-ui/core/Slide';
 
 // const emails = ['username@gmail.com', 'user02@gmail.com'];
 const styles = theme => ({
@@ -30,9 +34,21 @@ const styles = theme => ({
   },
   dBox: {
     padding: theme.spacing.unit * 2,
+  },
+  dActions: {
+    margin: 0,
+    padding: theme.spacing.unit * 2,
+    justifyContent: 'space-between',
+  },
+  rightIcon: {
+    paddingLeft: theme.spacing.unit,
   }
   
 });
+
+function Transition(props) {
+  return <Slide direction="down" {...props} />;
+}
 
 class ConfirmDialog extends React.Component {
   state = {
@@ -60,18 +76,24 @@ class ConfirmDialog extends React.Component {
     // const bookedDate = this.props.booked_date;
 
     return (
-      <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
+      <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other} TransitionComponent={Transition}>
         <DialogTitle id="simple-dialog-title" className={this.props.classes.root}>Confirm action</DialogTitle>
         <DialogContent className={this.props.classes.dBox}>
-          Are you sure you want to cancel deliveries?
+          <Typography variant="body1" gutterBottom align="center">
+            Are you sure you want to cancel deliveries?
+          </Typography>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={this.handleCancel} color="primary">
+        <DialogActions className={this.props.classes.dActions}>
+          <Button onClick={this.handleOk} variant="contained" color="primary" className={classes.button}>
+            Confirm
+            <Check className={classes.rightIcon} />
+          </Button>
+          <Button onClick={this.handleCancel} variant="contained" color="secondary" className={classes.button}>
             Cancel
+            <Close className={classes.rightIcon} />
           </Button>
-          <Button onClick={this.handleOk} color="primary">
-            Ok
-          </Button>
+          
+          
         </DialogActions>
       </Dialog>
     );

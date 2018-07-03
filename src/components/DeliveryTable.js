@@ -13,15 +13,17 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
+// import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import Delete from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+// import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import SearchBar from 'material-ui-search-bar';
 
-import EditDialog from './EditDialog';
+// import EditDialog from './EditDialog';
 import ConfirmDialog from './ConfirmationDialog';
+import DeliveryRow from './DeliveryRow';
 
 let counter = 0;
 function createData(consignment, order_ref, bookable, booked, booked_date) {
@@ -104,13 +106,14 @@ EnhancedTableHead.propTypes = {
 
 const toolbarStyles = theme => ({
   root: {
-    paddingRight: theme.spacing.unit,
+    
+    backgroundColor: theme.palette.secondary.main,
   },
   highlight:
     theme.palette.type === 'light'
       ? {
           color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+          backgroundColor: lighten(theme.palette.secondary.main, 0.85),
         }
       : {
           color: theme.palette.text.primary,
@@ -120,11 +123,17 @@ const toolbarStyles = theme => ({
     flex: '1 0 auto',
   },
   actions: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.primary.main,
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
   title: {
     flex: '0 0 auto',
   },
+  rightIcon: {
+    paddingLeft: theme.spacing.unit,
+  }
 });
 
 
@@ -143,25 +152,25 @@ let EnhancedTableToolbar = props => {
           <Typography color="inherit" variant="subheading">
             {numSelected} selected
           </Typography>
-        ) : (
-          <Typography variant="title" id="tableTitle">
-            Delivery Management
-          </Typography>
-        )}
+        ) : ''}
       </div>
       <div className={classes.spacer} />
-      <div className="{classes.actions}">
+      <div className={classes.actions}>
+        
         {numSelected > 0 ? (
             <Button size="small" variant="contained" color="secondary" className={classes.button} onClick={props.action}>
               Delete Booking
               <Delete className={classes.rightIcon} />
             </Button>
         ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
+          <SearchBar
+            datasource={['apple', 'banana', 'pears']}
+            onRequestSearch={() => console.log('onRequestSearch')}
+            placeholder="Search...  eg. Container No.(s): THC123789"
+            style={{
+              width: '100%',
+            }}
+           />
         )}
       </div>
     </Toolbar>
@@ -179,9 +188,12 @@ const styles = theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
+    maxWidth: 1200,
+    marginRight: 'auto',
+    marginLeft: 'auto',
   },
   table: {
-    minWidth: 1020,
+    // minWidth: 1020,
   },
   tableWrapper: {
     overflowX: 'auto',
@@ -198,12 +210,14 @@ class EnhancedTable extends React.Component {
       order: 'asc',
       orderBy: 'order_ref',
       selected: [],
+      bookable: [],
+      booked: [],
       data: [
-        createData('THC123789', '123456/1', 'cb', 'cb', '01/01/2018'),
-        createData('THC123789', '159351/3', 'cb', 'cb', '-'),
-        createData('BVR9845', '789456/1', 'cb', 'cb', '02/01/2018'),
-        createData('MBN2291', '693825/1', 'cb', 'cb', '-'),
-        createData('BVR9845', '123654/1', 'cb', 'cb', '-'),
+        createData('THC123789', '123456/1', '', '', '01/01/2018'),
+        createData('THC123789', '159351/3', '', '', '-'),
+        createData('BVR9845', '789456/1', '', '', '02/01/2018'),
+        createData('MBN2291', '693825/1', '', '', '-'),
+        createData('BVR9845', '123654/1', '', '', '-'),
       ],
       page: 0,
       rowsPerPage: 5,
@@ -214,7 +228,7 @@ class EnhancedTable extends React.Component {
   
   deleteBookingAction(event) {
     console.log('clicked');
-    this.fizz.handleClickOpen();
+    this.conDia.handleClickOpen();
   }
 
   handleRequestSort = (event, property) => {
@@ -258,6 +272,52 @@ class EnhancedTable extends React.Component {
     this.setState({ selected: newSelected });
   };
   
+  handleBookableClick = (event, id) => {
+    console.log('handle bookable clicked');
+    const { bookable } = this.state;
+    const bookableIndex = bookable.indexOf(id);
+    let newBookable = [];
+    
+    if (bookableIndex === -1) {
+      newBookable = newBookable.concat(bookable, id);
+    } else if (bookableIndex === 0) {
+      newBookable = newBookable.concat(bookable.slice(1));
+    } else if (bookableIndex === bookable.length - 1) {
+      newBookable = newBookable.concat(bookable.slice(0, -1));
+    } else if (bookableIndex > 0) {
+      newBookable = newBookable.concat(
+        bookable.slice(0, bookableIndex),
+        bookable.slice(bookableIndex + 1),
+      );
+    }
+    
+    this.setState({ bookable: newBookable });
+    
+  }
+  
+  handleBookedClick = (event, id) => {
+    console.log('handle booked clicked');
+    const { booked } = this.state;
+    const bookedIndex = booked.indexOf(id);
+    let newBooked = [];
+    
+    if (bookedIndex === -1) {
+      newBooked = newBooked.concat(booked, id);
+    } else if (bookedIndex === 0) {
+      newBooked = newBooked.concat(booked.slice(1));
+    } else if (bookedIndex === booked.length - 1) {
+      newBooked = newBooked.concat(booked.slice(0, -1));
+    } else if (bookedIndex > 0) {
+      newBooked = newBooked.concat(
+        booked.slice(0, bookedIndex),
+        booked.slice(bookedIndex + 1),
+      );
+    }
+    
+    this.setState({ booked: newBooked });
+    
+  }
+
 
 
   handleChangePage = (event, page) => {
@@ -271,6 +331,8 @@ class EnhancedTable extends React.Component {
   
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
+  isBookable = id => this.state.bookable.indexOf(id) !== -1;
+  isBooked = id => this.state.booked.indexOf(id) !== -1;
 
   render() {
     const { classes } = this.props;
@@ -296,27 +358,19 @@ class EnhancedTable extends React.Component {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
                   const isSelected = this.isSelected(n.id);
+                  const isBookable = this.isBookable(n.id);
+                  const isBooked = this.isBooked(n.id);
                   return (
-                    <TableRow
-                      
-                      role="checkbox"
-                      aria-checked={isSelected}
-                      tabIndex={-1}
-                      key={n.id}
-                      selected={isSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox checked={isSelected} onClick={event => this.handleClick(event, n.id)} />{n.id}
-                      </TableCell>
-                      <TableCell component="th" scope="row" padding="none">
-                        {n.consignment}
-                      </TableCell>
-                      <TableCell>{n.order_ref}</TableCell>
-                      <TableCell><Checkbox checked={isSelected} onClick={event => this.handleClick(event, n.id)} /></TableCell>
-                      <TableCell><Checkbox checked={isSelected} onClick={event => this.handleClick(event, n.id)} /></TableCell>
-                      <TableCell>{n.booked_date}</TableCell>
-                      <TableCell><EditDialog booked_date='test' /></TableCell>
-                    </TableRow>
+                    <DeliveryRow 
+                      key={n.id} 
+                      details={n} 
+                      isSelected={isSelected} 
+                      isBookable={isBookable} 
+                      isBooked={isBooked}
+                      selectedAction={event => this.handleClick(event, n.id)}
+                      bookedAction={event => this.handleBookedClick(event, n.id)}
+                      bookableAction={event => this.handleBookableClick(event, n.id)}
+                      />
                   );
                 })}
               {emptyRows > 0 && (
@@ -341,7 +395,7 @@ class EnhancedTable extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
-      <ConfirmDialog ref={fizz => this.fizz = fizz} />
+      <ConfirmDialog ref={conDia => this.conDia = conDia} />
       </Paper>
       
     );

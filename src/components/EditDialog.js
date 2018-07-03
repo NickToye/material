@@ -19,6 +19,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import EditOptions from './EditOptions';
+import Slide from '@material-ui/core/Slide';
 
 // const emails = ['username@gmail.com', 'user02@gmail.com'];
 const styles = theme => ({
@@ -26,10 +27,15 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
   },
   dBox: {
-    width: '320px'
-  }
+    width: '320px',    
+  },
+
   
 });
+
+function Transition(props) {
+  return <Slide direction="down" {...props} />;
+}
 
 class SimpleDialog extends React.Component {
   constructor(props) {
@@ -50,7 +56,7 @@ class SimpleDialog extends React.Component {
     const bookedDate = this.props.booked_date;
 
     return (
-      <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
+      <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other} TransitionComponent={Transition}>
         <DialogTitle id="simple-dialog-title" className={this.props.classes.root}>Edit Booking {bookedDate}</DialogTitle>
         <div className={this.props.classes.dBox}>
           <EditOptions />
@@ -68,6 +74,13 @@ SimpleDialog.propTypes = {
 
 const SimpleDialogWrapped = withStyles(styles)(SimpleDialog);
 
+const editDialog = theme => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+});
+
 class SimpleDialogDemo extends React.Component {
   state = {
     open: false,
@@ -83,16 +96,18 @@ class SimpleDialogDemo extends React.Component {
   handleClose = value => {
     this.setState({ selectedValue: value, open: false });
   };
+  
+  
 
   render() {
+    const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.root}>
         <Tooltip title="Edit" placement="right">
           <IconButton aria-label="Edit" onClick={this.handleClickOpen}>
             <EditIcon />
           </IconButton>
         </Tooltip>
-        
         
         <SimpleDialogWrapped
           selectedValue={this.state.selectedValue}
@@ -104,4 +119,4 @@ class SimpleDialogDemo extends React.Component {
   }
 }
 
-export default SimpleDialogDemo;
+export default withStyles(editDialog)(SimpleDialogDemo);
