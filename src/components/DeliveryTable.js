@@ -15,9 +15,13 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
+import Delete from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+
+import EditDialog from './EditDialog';
+import ConfirmDialog from './ConfirmationDialog';
 
 let counter = 0;
 function createData(consignment, order_ref, bookable, booked, booked_date) {
@@ -82,6 +86,7 @@ class EnhancedTableHead extends React.Component {
               </TableCell>
             );
           }, this)}
+          <TableCell>&nbsp;</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -96,7 +101,6 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
-
 
 const toolbarStyles = theme => ({
   root: {
@@ -113,7 +117,7 @@ const toolbarStyles = theme => ({
           backgroundColor: theme.palette.secondary.dark,
         },
   spacer: {
-    flex: '1 1 100%',
+    flex: '1 0 auto',
   },
   actions: {
     color: theme.palette.text.secondary,
@@ -122,6 +126,8 @@ const toolbarStyles = theme => ({
     flex: '0 0 auto',
   },
 });
+
+
 
 let EnhancedTableToolbar = props => {
   const { numSelected, classes } = props;
@@ -144,13 +150,12 @@ let EnhancedTableToolbar = props => {
         )}
       </div>
       <div className={classes.spacer} />
-      <div className={classes.actions}>
+      <div className="{classes.actions}">
         {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <Typography variant="body1">Cancel Delivery</Typography><DeleteIcon />
-            </IconButton>
-          </Tooltip>
+            <Button size="small" variant="contained" color="secondary" className={classes.button} onClick={props.action}>
+              Delete Booking
+              <Delete className={classes.rightIcon} />
+            </Button>
         ) : (
           <Tooltip title="Filter list">
             <IconButton aria-label="Filter list">
@@ -203,6 +208,13 @@ class EnhancedTable extends React.Component {
       page: 0,
       rowsPerPage: 5,
     };
+    
+    this.deleteBookingAction = this.deleteBookingAction.bind(this);
+  }
+  
+  deleteBookingAction(event) {
+    console.log('clicked');
+    this.fizz.handleClickOpen();
   }
 
   handleRequestSort = (event, property) => {
@@ -225,6 +237,7 @@ class EnhancedTable extends React.Component {
   };
 
   handleClick = (event, id) => {
+    console.log('handle clicked');
     const { selected } = this.state;
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
@@ -244,6 +257,8 @@ class EnhancedTable extends React.Component {
 
     this.setState({ selected: newSelected });
   };
+  
+
 
   handleChangePage = (event, page) => {
     this.setState({ page });
@@ -252,6 +267,8 @@ class EnhancedTable extends React.Component {
   handleChangeRowsPerPage = event => {
     this.setState({ rowsPerPage: event.target.value });
   };
+  
+  
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
@@ -262,7 +279,7 @@ class EnhancedTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} action={event => this.deleteBookingAction(event)}  />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -289,7 +306,7 @@ class EnhancedTable extends React.Component {
                       selected={isSelected}
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox checked={isSelected} onClick={event => this.handleClick(event, n.id)} />
+                        <Checkbox checked={isSelected} onClick={event => this.handleClick(event, n.id)} />{n.id}
                       </TableCell>
                       <TableCell component="th" scope="row" padding="none">
                         {n.consignment}
@@ -298,6 +315,7 @@ class EnhancedTable extends React.Component {
                       <TableCell><Checkbox checked={isSelected} onClick={event => this.handleClick(event, n.id)} /></TableCell>
                       <TableCell><Checkbox checked={isSelected} onClick={event => this.handleClick(event, n.id)} /></TableCell>
                       <TableCell>{n.booked_date}</TableCell>
+                      <TableCell><EditDialog booked_date='test' /></TableCell>
                     </TableRow>
                   );
                 })}
@@ -323,7 +341,9 @@ class EnhancedTable extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
+      <ConfirmDialog ref={fizz => this.fizz = fizz} />
       </Paper>
+      
     );
   }
 }

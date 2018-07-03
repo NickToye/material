@@ -3,7 +3,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
 
-import EnhancedTable from './components/EnhancedTable';
+import DeliveryTable from './components/DeliveryTable';
 import SearchBar from './components/SearchBar';
 
 
@@ -33,7 +33,7 @@ class App extends Component {
           <Grid item xs={12}>
             <MuiThemeProvider theme={theme}>
               <SearchBar />
-              <EnhancedTable />
+              <DeliveryTable />
             </MuiThemeProvider>
           </Grid>
         </Grid>
