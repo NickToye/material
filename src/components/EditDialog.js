@@ -38,10 +38,7 @@ function Transition(props) {
 }
 
 class SimpleDialog extends React.Component {
-  constructor(props) {
-    super(props);
-    this.fizz = React.createRef();
-  }
+  
   
   handleClose = () => {
     this.props.onClose(this.props.selectedValue);
@@ -52,14 +49,13 @@ class SimpleDialog extends React.Component {
   };
 
   render() {
-    const { classes, onClose, selectedValue,  ...other } = this.props;
-    const bookedDate = this.props.booked_date;
-
+    const { classes, onClose, selectedValue, bookedDate, isBookable, isBooked, ...other } = this.props;
+    console.log('Simple Dialog: ' + isBookable);
     return (
       <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other} TransitionComponent={Transition}>
-        <DialogTitle id="simple-dialog-title" className={this.props.classes.root}>Edit Booking {bookedDate}</DialogTitle>
+        <DialogTitle id="simple-dialog-title" className={this.props.classes.root}>Edit Booking</DialogTitle>
         <div className={this.props.classes.dBox}>
-          <EditOptions />
+          <EditOptions editBookedDate={bookedDate} editBookable={isBookable} editBooked={isBooked} />
         </div>
       </Dialog>
     );
@@ -74,14 +70,14 @@ SimpleDialog.propTypes = {
 
 const SimpleDialogWrapped = withStyles(styles)(SimpleDialog);
 
-const editDialog = theme => ({
+const editDialogTheme = theme => ({
   root: {
     display: 'flex',
     justifyContent: 'flex-end',
   },
 });
 
-class SimpleDialogDemo extends React.Component {
+class EditDialog extends React.Component {
   state = {
     open: false,
     // selectedValue: emails[1],
@@ -100,7 +96,12 @@ class SimpleDialogDemo extends React.Component {
   
 
   render() {
+    
+    const bookedDate = this.props.booked_date;
+    const bookable = this.props.isBookable;
+    const booked = this.props.isBooked;
     const { classes } = this.props;
+    console.log('Edit Dialog: ' + bookable);
     return (
       <div className={classes.root}>
         <Tooltip title="Edit" placement="right">
@@ -113,10 +114,13 @@ class SimpleDialogDemo extends React.Component {
           selectedValue={this.state.selectedValue}
           open={this.state.open}
           onClose={this.handleClose}
+          bookedDate={bookedDate}
+          isBookable={bookable}
+          isBooked={booked}
         />
       </div>
     );
   }
 }
 
-export default withStyles(editDialog)(SimpleDialogDemo);
+export default withStyles(editDialogTheme)(EditDialog);

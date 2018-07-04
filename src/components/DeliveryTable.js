@@ -210,14 +210,13 @@ class EnhancedTable extends React.Component {
       order: 'asc',
       orderBy: 'order_ref',
       selected: [],
-      bookable: [],
-      booked: [],
+      
       data: [
-        createData('THC123789', '123456/1', '', '', '01/01/2018'),
-        createData('THC123789', '159351/3', '', '', '-'),
-        createData('BVR9845', '789456/1', '', '', '02/01/2018'),
-        createData('MBN2291', '693825/1', '', '', '-'),
-        createData('BVR9845', '123654/1', '', '', '-'),
+        createData('THC123789', '123456/1', true, true, '01/01/2018'),
+        createData('THC123789', '159351/3', true, false),
+        createData('BVR9845', '789456/1', true, true, '02/01/2018'),
+        createData('MBN2291', '693825/1', false, false ),
+        createData('BVR9845', '123654/1', false, false ),
       ],
       page: 0,
       rowsPerPage: 5,
@@ -272,51 +271,9 @@ class EnhancedTable extends React.Component {
     this.setState({ selected: newSelected });
   };
   
-  handleBookableClick = (event, id) => {
-    console.log('handle bookable clicked');
-    const { bookable } = this.state;
-    const bookableIndex = bookable.indexOf(id);
-    let newBookable = [];
-    
-    if (bookableIndex === -1) {
-      newBookable = newBookable.concat(bookable, id);
-    } else if (bookableIndex === 0) {
-      newBookable = newBookable.concat(bookable.slice(1));
-    } else if (bookableIndex === bookable.length - 1) {
-      newBookable = newBookable.concat(bookable.slice(0, -1));
-    } else if (bookableIndex > 0) {
-      newBookable = newBookable.concat(
-        bookable.slice(0, bookableIndex),
-        bookable.slice(bookableIndex + 1),
-      );
-    }
-    
-    this.setState({ bookable: newBookable });
-    
-  }
   
-  handleBookedClick = (event, id) => {
-    console.log('handle booked clicked');
-    const { booked } = this.state;
-    const bookedIndex = booked.indexOf(id);
-    let newBooked = [];
-    
-    if (bookedIndex === -1) {
-      newBooked = newBooked.concat(booked, id);
-    } else if (bookedIndex === 0) {
-      newBooked = newBooked.concat(booked.slice(1));
-    } else if (bookedIndex === booked.length - 1) {
-      newBooked = newBooked.concat(booked.slice(0, -1));
-    } else if (bookedIndex > 0) {
-      newBooked = newBooked.concat(
-        booked.slice(0, bookedIndex),
-        booked.slice(bookedIndex + 1),
-      );
-    }
-    
-    this.setState({ booked: newBooked });
-    
-  }
+  
+  
 
 
 
@@ -331,8 +288,7 @@ class EnhancedTable extends React.Component {
   
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
-  isBookable = id => this.state.bookable.indexOf(id) !== -1;
-  isBooked = id => this.state.booked.indexOf(id) !== -1;
+
 
   render() {
     const { classes } = this.props;
@@ -358,9 +314,11 @@ class EnhancedTable extends React.Component {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
                   const isSelected = this.isSelected(n.id);
-                  const isBookable = this.isBookable(n.id);
-                  const isBooked = this.isBooked(n.id);
+                  const isBookable = n.bookable;
+                  const isBooked = n.booked;
+                  
                   return (
+                    
                     <DeliveryRow 
                       key={n.id} 
                       details={n} 
@@ -369,7 +327,6 @@ class EnhancedTable extends React.Component {
                       isBooked={isBooked}
                       selectedAction={event => this.handleClick(event, n.id)}
                       bookedAction={event => this.handleBookedClick(event, n.id)}
-                      bookableAction={event => this.handleBookableClick(event, n.id)}
                       />
                   );
                 })}

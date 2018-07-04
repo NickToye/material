@@ -10,14 +10,29 @@ import EditDialog from './EditDialog';
 class DeliveryRow extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isBookable: this.props.isBookable,
+      isBooked: this.props.isBooked
+    };
+    
+    this.updateBookable = this.updateBookable.bind(this);
+    this.updateBooked = this.updateBooked.bind(this);
+  }
+  
+  updateBookable() {
+    this.setState(prev => ({ isBookable: !prev.isBookable }));
+  }
+  
+  updateBooked() {
+    this.setState(prev => ({ isBooked: !prev.isBooked }));
   }
 
   render() {
     const details = this.props.details;
     const isSelected = this.props.isSelected;
-    const isBookable = this.props.isBookable;
-    const isBooked = this.props.isBooked;
+    const isBookable = this.state.isBookable;
+    const isBooked = this.state.isBooked;
+    // console.log(isBookable);
     return (
       
       <TableRow key={details.id}>
@@ -30,10 +45,10 @@ class DeliveryRow extends React.Component {
         <TableCell>
           {details.order_ref}
         </TableCell>
-        <TableCell><Checkbox checked={isBookable} onClick={this.props.bookableAction} /></TableCell>
-        <TableCell><Checkbox checked={isBooked} onClick={this.props.bookedAction} /></TableCell>
+        <TableCell><Checkbox checked={isBookable} onClick={this.updateBookable} /></TableCell>
+        <TableCell><Checkbox checked={isBooked} onClick={this.updateBooked} /></TableCell>
         <TableCell>{details.booked_date}</TableCell>
-        <TableCell><EditDialog booked_date="test" /></TableCell>
+        <TableCell><EditDialog booked_date={details.booked_date} isBookable={isBookable} isBooked={isBooked} /></TableCell>
       </TableRow>
     );
   }
