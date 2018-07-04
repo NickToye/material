@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 
 import DeliveryTable from './components/DeliveryTable';
+import ApplicationBar from './components/ApplicationBar';
 
 
 
@@ -31,6 +31,8 @@ const theme = createMuiTheme({
 });
 
 
+
+
 class App extends Component {
   
   render() {
@@ -39,13 +41,10 @@ class App extends Component {
 
             <MuiThemeProvider theme={theme}>
               <CssBaseline />
-                <div style={{ padding: 20 }}>
-                  <Typography color="primary" variant="headline" gutterBottom align="center">
-                    Delivery Management
-                  </Typography>
-                  
-                    <DeliveryTable />
-                  </div>
+                <div style={{ padding: 20 }}>      
+                  <ApplicationBar />
+                  <DeliveryTable />
+                </div>
             </MuiThemeProvider>
           
       </React.Fragment>

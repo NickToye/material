@@ -88,7 +88,6 @@ class EnhancedTableHead extends React.Component {
               </TableCell>
             );
           }, this)}
-          <TableCell>&nbsp;</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -106,7 +105,6 @@ EnhancedTableHead.propTypes = {
 
 const toolbarStyles = theme => ({
   root: {
-    
     backgroundColor: theme.palette.secondary.main,
   },
   highlight:
@@ -187,10 +185,10 @@ EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
     maxWidth: 1200,
     marginRight: 'auto',
     marginLeft: 'auto',
+    borderRadius: '0 0 4px 4px',
   },
   table: {
     // minWidth: 1020,
@@ -198,6 +196,9 @@ const styles = theme => ({
   tableWrapper: {
     overflowX: 'auto',
   },
+  paper: {
+    backgroundColor: 'red',
+  }
   
 });
 
@@ -213,10 +214,10 @@ class EnhancedTable extends React.Component {
       
       data: [
         createData('THC123789', '123456/1', true, true, '01/01/2018'),
-        createData('THC123789', '159351/3', true, false),
+        createData('THC123789', '159351/3', true, false, null),
         createData('BVR9845', '789456/1', true, true, '02/01/2018'),
-        createData('MBN2291', '693825/1', false, false ),
-        createData('BVR9845', '123654/1', false, false ),
+        createData('MBN2291', '693825/1', false, false, null ),
+        createData('BVR9845', '123654/1', false, false, null ),
       ],
       page: 0,
       rowsPerPage: 5,
@@ -224,6 +225,8 @@ class EnhancedTable extends React.Component {
     
     this.deleteBookingAction = this.deleteBookingAction.bind(this);
   }
+  
+  
   
   deleteBookingAction(event) {
     console.log('clicked');

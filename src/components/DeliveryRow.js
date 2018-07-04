@@ -1,38 +1,104 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+// import { withStyles } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 import Checkbox from '@material-ui/core/Checkbox';
-import EditDialog from './EditDialog';
+// import EditDialog from './EditDialog';
+import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
+import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
+import DatePicker from 'material-ui-pickers/DatePicker';
+import lightBlue from '@material-ui/core/colors/lightBlue';
+
+const materialTheme = createMuiTheme({
+  overrides: {
+    MuiPickersToolbar: {
+      toolbar: {
+        backgroundColor: lightBlue.A200,
+      },
+    },
+    MuiPickersCalendarHeader: {
+      switchHeader: {
+        // backgroundColor: lightBlue.A200,
+        // color: 'white',
+      },
+    },
+    MuiInput: {
+      root: {
+        fontSize: '13'
+      }
+    },
+    MuiPickersDay: {
+      day: {
+        color: lightBlue.A700,
+      },
+      selected: {
+        backgroundColor: lightBlue['400'],
+      },
+      current: {
+        color: lightBlue['900'],
+      },
+    },
+    MuiPickersModal: {
+      dialogAction: {
+        color: lightBlue['400'],
+      },
+    },
+  },
+});
 
 class DeliveryRow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isBookable: this.props.isBookable,
-      isBooked: this.props.isBooked
+      isBooked: this.props.isBooked,
+      bookedDate: this.props.details.booked_date,
     };
     
     this.updateBookable = this.updateBookable.bind(this);
     this.updateBooked = this.updateBooked.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+  }
+  
+  componentWillMount() {
+    if(this.state.isBookable) {
+      console.log('bookable');
+      this.setState({ isBookedDisabled: false });
+    } else {
+      console.log('not bookable');
+      this.setState({ isBookedDisabled: true });
+    }
   }
   
   updateBookable() {
     this.setState(prev => ({ isBookable: !prev.isBookable }));
+    if(this.state.isBookable) {
+      console.log('bookable');
+      this.setState({ isBookedDisabled: false });
+    } else {
+      console.log('not bookable');
+      this.setState({ isBookedDisabled: true });
+      this.setState({ isBooked: false });
+    }
   }
   
   updateBooked() {
     this.setState(prev => ({ isBooked: !prev.isBooked }));
   }
+  
+  handleDateChange = date => {
+    this.setState({ bookedDate: date });
+  };
 
   render() {
     const details = this.props.details;
     const isSelected = this.props.isSelected;
     const isBookable = this.state.isBookable;
     const isBooked = this.state.isBooked;
-    // console.log(isBookable);
+    const isBookedDisabled = this.state.isBookedDisabled;
     return (
       
       <TableRow key={details.id}>
@@ -46,9 +112,25 @@ class DeliveryRow extends React.Component {
           {details.order_ref}
         </TableCell>
         <TableCell><Checkbox checked={isBookable} onClick={this.updateBookable} /></TableCell>
-        <TableCell><Checkbox checked={isBooked} onClick={this.updateBooked} /></TableCell>
-        <TableCell>{details.booked_date}</TableCell>
-        <TableCell><EditDialog booked_date={details.booked_date} isBookable={isBookable} isBooked={isBooked} /></TableCell>
+        <TableCell>
+          {isBookedDisabled ? <Checkbox checked={isBooked} onClick={this.updateBooked} disabled /> : <Checkbox checked={isBooked} onClick={this.updateBooked}/>}
+      </TableCell>
+        <TableCell>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MuiThemeProvider theme={materialTheme}>
+              <div className="picker">
+                <DatePicker 
+                  keyboard
+                  clearable 
+                  format="Do MMM YYYY" 
+                  value={this.state.bookedDate} 
+                  onChange={this.handleDateChange} 
+                  InputProps={{ disableUnderline: true }}
+                />
+              </div>
+            </MuiThemeProvider>
+          </MuiPickersUtilsProvider>
+        </TableCell>
       </TableRow>
     );
   }

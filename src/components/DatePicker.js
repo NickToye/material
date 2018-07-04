@@ -69,7 +69,7 @@ export default class DatePickers extends PureComponent {
             <DatePicker 
               keyboard
               clearable 
-              format="D MMM YYYY" 
+              format="MMM D YYYY" 
               value={selectedDate} 
               onChange={this.handleDateChange} 
               InputProps={{ disableUnderline: true }}
