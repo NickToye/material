@@ -90,7 +90,7 @@ class DeliveryRow extends React.Component {
     
     return (
         
-      <TableRow key={details.id}>
+      <TableRow key={details.id} hover selected={isSelected}>
         <TableCell padding="checkbox">
           <Checkbox checked={isSelected} onClick={this.props.selectedAction} />
         </TableCell>

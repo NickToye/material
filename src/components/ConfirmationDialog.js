@@ -52,8 +52,11 @@ function Transition(props) {
 
 class ConfirmDialog extends React.Component {
   state = {
-    open: false
+    open: false,
+    selected: this.props.selected
   }
+  
+  
   
   handleCancel = () => {
     this.props.onClose(this.props.value);
@@ -61,6 +64,7 @@ class ConfirmDialog extends React.Component {
 
   handleOk = () => {
     this.props.onClose(this.state.value);
+    console.log('confirm')
   };
   
   handleClose = () => {
@@ -74,13 +78,15 @@ class ConfirmDialog extends React.Component {
   render() {
     const { classes, onClose, selectedValue,  ...other } = this.props;
     // const bookedDate = this.props.booked_date;
-
+    console.log([this.state]);
     return (
       <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other} TransitionComponent={Transition}>
         <DialogTitle id="simple-dialog-title" className={this.props.classes.root}>Confirm action</DialogTitle>
         <DialogContent className={this.props.classes.dBox}>
+          
           <Typography variant="body1" gutterBottom align="center">
             Are you sure you want to cancel deliveries?
+             
           </Typography>
         </DialogContent>
         <DialogActions className={this.props.classes.dActions}>
@@ -122,6 +128,7 @@ class ConfirmDialogComponent extends React.Component {
   handleClickOpen = () => {
     this.setState({
       open: true,
+      selected: this.props.selected
     });
   };
 

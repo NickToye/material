@@ -228,7 +228,7 @@ class EnhancedTable extends React.Component {
       order: 'asc',
       orderBy: 'order_ref',
       selected: [],
-      
+      fizz: 'fizz',
       data: [
         createData('THC123789', '123456/1', true, true, '01/01/2018'),
         createData('THC123789', '159351/3', true, false, null),
@@ -255,9 +255,10 @@ class EnhancedTable extends React.Component {
   
   
   
-  deleteBookingAction(event) {
+  deleteBookingAction(event, selected) {
     console.log('clicked');
     this.conDia.handleClickOpen();
+    console.log(selected);
   }
 
   handleRequestSort = (event, property) => {
@@ -299,6 +300,7 @@ class EnhancedTable extends React.Component {
     }
 
     this.setState({ selected: newSelected });
+    console.log('selected: ' + newSelected);
   };
   
   
@@ -324,10 +326,10 @@ class EnhancedTable extends React.Component {
     const { classes } = this.props;
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-
     return (
+      
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} action={event => this.deleteBookingAction(event)}  />
+        <EnhancedTableToolbar numSelected={selected.length} action={event => this.deleteBookingAction(event, selected)}  />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -382,7 +384,8 @@ class EnhancedTable extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
-      <ConfirmDialog ref={conDia => this.conDia = conDia} />
+      <pre>{JSON.stringify(this.state.selected, null, 2)}</pre> 
+      <ConfirmDialog ref={conDia => this.conDia = conDia} selected={this.state.newSelected}/>
       </Paper>
       
     );
