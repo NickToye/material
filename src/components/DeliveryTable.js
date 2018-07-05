@@ -14,13 +14,22 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
+// import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import Button from '@material-ui/core/Button';
+import Delete from '@material-ui/icons/Delete';
+// import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+<<<<<<< HEAD:src/components/EnhancedTable.js
 import DialogCard from './DialogCard';
 // import blue from '@material-ui/core/colors/blue';
+=======
+import SearchBar from 'material-ui-search-bar';
+
+// import EditDialog from './EditDialog';
+import ConfirmDialog from './ConfirmationDialog';
+import DeliveryRow from './DeliveryRow';
+>>>>>>> 5b4055246edc6d620293a60e8fed452764cffb7f:src/components/DeliveryTable.js
 
 let counter = 0;
 function createData(consignment, order_ref, bookable, booked, booked_date) {
@@ -117,31 +126,38 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-
 const toolbarStyles = theme => ({
   root: {
-    paddingRight: theme.spacing.unit,
+    backgroundColor: theme.palette.secondary.main,
   },
   highlight:
     theme.palette.type === 'light'
       ? {
           color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+          backgroundColor: lighten(theme.palette.secondary.main, 0.85),
         }
       : {
           color: theme.palette.text.primary,
           backgroundColor: theme.palette.secondary.dark,
         },
   spacer: {
-    flex: '1 1 100%',
+    flex: '1 0 auto',
   },
   actions: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.primary.main,
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
   title: {
     flex: '0 0 auto',
   },
+  rightIcon: {
+    paddingLeft: theme.spacing.unit,
+  }
 });
+
+
 
 let EnhancedTableToolbar = props => {
   const { numSelected, classes } = props;
@@ -157,26 +173,25 @@ let EnhancedTableToolbar = props => {
           <Typography color="inherit" variant="subheading">
             {numSelected} selected
           </Typography>
-        ) : (
-          <Typography variant="title" id="tableTitle">
-            Delivery Management
-          </Typography>
-        )}
+        ) : ''}
       </div>
       <div className={classes.spacer} />
       <div className={classes.actions}>
+        
         {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <Typography variant="body1">Cancel Delivery</Typography><DeleteIcon />
-            </IconButton>
-          </Tooltip>
+            <Button size="small" variant="contained" color="secondary" className={classes.button} onClick={props.action}>
+              Delete Booking
+              <Delete className={classes.rightIcon} />
+            </Button>
         ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
+          <SearchBar
+            datasource={['apple', 'banana', 'pears']}
+            onRequestSearch={() => console.log('onRequestSearch')}
+            placeholder="Search...  eg. Container No.(s): THC123789"
+            style={{
+              width: '100%',
+            }}
+           />
         )}
       </div>
     </Toolbar>
@@ -193,14 +208,20 @@ EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    maxWidth: 1200,
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    borderRadius: '0 0 4px 4px',
   },
   table: {
-    minWidth: 1020,
+    // minWidth: 1020,
   },
   tableWrapper: {
     overflowX: 'auto',
   },
+  paper: {
+    backgroundColor: 'red',
+  }
   
 });
 
@@ -213,16 +234,26 @@ class EnhancedTable extends React.Component {
       order: 'asc',
       orderBy: 'order_ref',
       selected: [],
+      
       data: [
-        createData('THC123789', '123456/1', 'cb', 'cb', '01/01/2018'),
-        createData('THC123789', '159351/3', 'cb', 'cb', '-'),
-        createData('BVR9845', '789456/1', 'cb', 'cb', '02/01/2018'),
-        createData('MBN2291', '693825/1', 'cb', 'cb', '-'),
-        createData('BVR9845', '123654/1', 'cb', 'cb', '-'),
+        createData('THC123789', '123456/1', true, true, '01/01/2018'),
+        createData('THC123789', '159351/3', true, false, null),
+        createData('BVR9845', '789456/1', true, true, '02/01/2018'),
+        createData('MBN2291', '693825/1', false, false, null ),
+        createData('BVR9845', '123654/1', false, false, null ),
       ],
       page: 0,
       rowsPerPage: 5,
     };
+    
+    this.deleteBookingAction = this.deleteBookingAction.bind(this);
+  }
+  
+  
+  
+  deleteBookingAction(event) {
+    console.log('clicked');
+    this.conDia.handleClickOpen();
   }
 
   handleRequestSort = (event, property) => {
@@ -245,6 +276,7 @@ class EnhancedTable extends React.Component {
   };
 
   handleClick = (event, id) => {
+    console.log('handle clicked');
     const { selected } = this.state;
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
@@ -264,6 +296,12 @@ class EnhancedTable extends React.Component {
 
     this.setState({ selected: newSelected });
   };
+  
+  
+  
+  
+
+
 
   handleChangePage = (event, page) => {
     this.setState({ page });
@@ -272,8 +310,11 @@ class EnhancedTable extends React.Component {
   handleChangeRowsPerPage = event => {
     this.setState({ rowsPerPage: event.target.value });
   };
+  
+  
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
+
 
   render() {
     const { classes } = this.props;
@@ -282,7 +323,7 @@ class EnhancedTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} action={event => this.deleteBookingAction(event)}  />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -299,7 +340,11 @@ class EnhancedTable extends React.Component {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
                   const isSelected = this.isSelected(n.id);
+                  const isBookable = n.bookable;
+                  const isBooked = n.booked;
+                  
                   return (
+<<<<<<< HEAD:src/components/EnhancedTable.js
                     <TableRow
                       
                       role="checkbox"
@@ -320,6 +365,18 @@ class EnhancedTable extends React.Component {
                       <TableCell>{n.booked_date}</TableCell>
                       <TableCell><DialogCard /></TableCell>
                     </TableRow>
+=======
+                    
+                    <DeliveryRow 
+                      key={n.id} 
+                      details={n} 
+                      isSelected={isSelected} 
+                      isBookable={isBookable} 
+                      isBooked={isBooked}
+                      selectedAction={event => this.handleClick(event, n.id)}
+                      bookedAction={event => this.handleBookedClick(event, n.id)}
+                      />
+>>>>>>> 5b4055246edc6d620293a60e8fed452764cffb7f:src/components/DeliveryTable.js
                   );
                 })}
               {emptyRows > 0 && (
@@ -344,9 +401,14 @@ class EnhancedTable extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
+<<<<<<< HEAD:src/components/EnhancedTable.js
         
         
+=======
+      <ConfirmDialog ref={conDia => this.conDia = conDia} />
+>>>>>>> 5b4055246edc6d620293a60e8fed452764cffb7f:src/components/DeliveryTable.js
       </Paper>
+      
     );
   }
 }
