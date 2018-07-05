@@ -63,36 +63,19 @@ class DeliveryRow extends React.Component {
     this.handleDateChange = this.handleDateChange.bind(this);
   }
   
-  componentWillMount() {
-    console.log('props: ' + this.props.isBookable);
-    console.log('...componentWillMount function')
-    // console.log(this.state.isBookable);
-    if(this.state.isBookable) {
-      // console.log('bookable');
-      this.setState({ isBookedDisabled: false });
-    } else {
-      // console.log('not bookable');
-      this.setState({ isBookedDisabled: true });
-    }
-  }
+  
+  
+  
   
   updateBookable() {
-    console.log('...updateBookable() function');
-    console.log(this.state.isBookable);
-    this.setState(prevState => ({ isBookable: !prevState.isBookable }));
-    if(this.state.isBookable) {
-      console.log('bookable');
-      console.log(this.state.isBookable);
-      // this.setState({ isBookedDisabled: false });
-    } else {
-      console.log('not bookable');
-      // this.setState({ isBookedDisabled: true });
-      // this.setState({ isBooked: false });
+    this.setState(prevState => ({ isBookable: !prevState.isBookable, isBooked: false }));
+    if(!this.state.isBookable) {
+      this.setState({ isBooked: false });
     }
   }
   
   updateBooked() {
-    
+    this.setState(prevState => ({ isBooked: !prevState.isBooked }));
   }
   
   handleDateChange = date => {
@@ -104,9 +87,9 @@ class DeliveryRow extends React.Component {
     const isSelected = this.props.isSelected;
     const isBookable = this.state.isBookable;
     const isBooked = this.state.isBooked;
-    const isBookedDisabled = this.state.isBookedDisabled;
+    
     return (
-      
+        
       <TableRow key={details.id}>
         <TableCell padding="checkbox">
           <Checkbox checked={isSelected} onClick={this.props.selectedAction} />
@@ -119,7 +102,7 @@ class DeliveryRow extends React.Component {
         </TableCell>
         <TableCell><Checkbox checked={isBookable} onClick={this.updateBookable} /></TableCell>
         <TableCell>
-          {isBookedDisabled ? <Checkbox checked={isBooked} onClick={this.updateBooked} disabled /> : <Checkbox checked={isBooked} onClick={this.updateBooked}/>}
+          {isBookable ? <Checkbox checked={isBooked} onClick={this.updateBooked} /> : <Checkbox checked={isBooked} onClick={this.updateBooked} disabled/>}
       </TableCell>
         <TableCell>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
