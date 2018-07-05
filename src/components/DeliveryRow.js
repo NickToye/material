@@ -80,7 +80,6 @@ class DeliveryRow extends React.Component {
   
   handleDateChange = date => {
     this.setState({ bookedDate: date });
-    console.log('');
   };
 
   render() {
