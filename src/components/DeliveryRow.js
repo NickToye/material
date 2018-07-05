@@ -80,6 +80,7 @@ class DeliveryRow extends React.Component {
   
   handleDateChange = date => {
     this.setState({ bookedDate: date });
+    console.log('');
   };
 
   render() {
@@ -87,6 +88,7 @@ class DeliveryRow extends React.Component {
     const isSelected = this.props.isSelected;
     const isBookable = this.state.isBookable;
     const isBooked = this.state.isBooked;
+    
     
     return (
         
