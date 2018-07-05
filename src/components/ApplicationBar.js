@@ -28,7 +28,8 @@ const styles = theme => ({
     flex: 1,
   },
   customIcon: {
-    top: 7
+    top: 7,
+    display: 'block'
   }
 });
 

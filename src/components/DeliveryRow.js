@@ -64,13 +64,14 @@ class DeliveryRow extends React.Component {
   }
   
   componentWillMount() {
+    console.log('props: ' + this.props.isBookable);
     console.log('...componentWillMount function')
-    console.log(this.state.isBookable);
+    // console.log(this.state.isBookable);
     if(this.state.isBookable) {
-      console.log('bookable');
+      // console.log('bookable');
       this.setState({ isBookedDisabled: false });
     } else {
-      console.log('not bookable');
+      // console.log('not bookable');
       this.setState({ isBookedDisabled: true });
     }
   }
