@@ -20,16 +20,11 @@ import Button from '@material-ui/core/Button';
 import Delete from '@material-ui/icons/Delete';
 // import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-<<<<<<< HEAD:src/components/EnhancedTable.js
-import DialogCard from './DialogCard';
-// import blue from '@material-ui/core/colors/blue';
-=======
 import SearchBar from 'material-ui-search-bar';
 
 // import EditDialog from './EditDialog';
 import ConfirmDialog from './ConfirmationDialog';
 import DeliveryRow from './DeliveryRow';
->>>>>>> 5b4055246edc6d620293a60e8fed452764cffb7f:src/components/DeliveryTable.js
 
 let counter = 0;
 function createData(consignment, order_ref, bookable, booked, booked_date) {
@@ -110,7 +105,6 @@ class EnhancedTableHead extends React.Component {
               </TableCell>
             );
           }, this)}
-          <TableCell>&nbsp;</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -237,10 +231,10 @@ class EnhancedTable extends React.Component {
       
       data: [
         createData('THC123789', '123456/1', true, true, '01/01/2018'),
-        createData('THC123789', '159351/3', true, false, null),
-        createData('BVR9845', '789456/1', true, true, '02/01/2018'),
-        createData('MBN2291', '693825/1', false, false, null ),
-        createData('BVR9845', '123654/1', false, false, null ),
+        // createData('THC123789', '159351/3', true, false, null),
+        // createData('BVR9845', '789456/1', true, true, '02/01/2018'),
+        // createData('MBN2291', '693825/1', false, false, null ),
+        // createData('BVR9845', '123654/1', false, false, null ),
       ],
       page: 0,
       rowsPerPage: 5,
@@ -344,28 +338,6 @@ class EnhancedTable extends React.Component {
                   const isBooked = n.booked;
                   
                   return (
-<<<<<<< HEAD:src/components/EnhancedTable.js
-                    <TableRow
-                      
-                      role="checkbox"
-                      aria-checked={isSelected}
-                      tabIndex={-1}
-                      key={n.id}
-                      selected={isSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox checked={isSelected} onClick={event => this.handleClick(event, n.id)} />
-                      </TableCell>
-                      <TableCell component="th" scope="row" padding="none">
-                        {n.consignment}
-                      </TableCell>
-                      <TableCell>{n.order_ref}</TableCell>
-                      <TableCell><Checkbox checked={isSelected} onClick={event => this.handleClick(event, n.id)} /></TableCell>
-                      <TableCell><Checkbox checked={isSelected} onClick={event => this.handleClick(event, n.id)} /></TableCell>
-                      <TableCell>{n.booked_date}</TableCell>
-                      <TableCell><DialogCard /></TableCell>
-                    </TableRow>
-=======
                     
                     <DeliveryRow 
                       key={n.id} 
@@ -376,7 +348,6 @@ class EnhancedTable extends React.Component {
                       selectedAction={event => this.handleClick(event, n.id)}
                       bookedAction={event => this.handleBookedClick(event, n.id)}
                       />
->>>>>>> 5b4055246edc6d620293a60e8fed452764cffb7f:src/components/DeliveryTable.js
                   );
                 })}
               {emptyRows > 0 && (
@@ -401,12 +372,7 @@ class EnhancedTable extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
-<<<<<<< HEAD:src/components/EnhancedTable.js
-        
-        
-=======
       <ConfirmDialog ref={conDia => this.conDia = conDia} />
->>>>>>> 5b4055246edc6d620293a60e8fed452764cffb7f:src/components/DeliveryTable.js
       </Paper>
       
     );

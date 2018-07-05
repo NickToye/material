@@ -64,6 +64,8 @@ class DeliveryRow extends React.Component {
   }
   
   componentWillMount() {
+    console.log('...componentWillMount function')
+    console.log(this.state.isBookable);
     if(this.state.isBookable) {
       console.log('bookable');
       this.setState({ isBookedDisabled: false });
@@ -74,19 +76,22 @@ class DeliveryRow extends React.Component {
   }
   
   updateBookable() {
-    this.setState(prev => ({ isBookable: !prev.isBookable }));
+    console.log('...updateBookable() function');
+    console.log(this.state.isBookable);
+    this.setState(prevState => ({ isBookable: !prevState.isBookable }));
     if(this.state.isBookable) {
       console.log('bookable');
-      this.setState({ isBookedDisabled: false });
+      console.log(this.state.isBookable);
+      // this.setState({ isBookedDisabled: false });
     } else {
       console.log('not bookable');
-      this.setState({ isBookedDisabled: true });
-      this.setState({ isBooked: false });
+      // this.setState({ isBookedDisabled: true });
+      // this.setState({ isBooked: false });
     }
   }
   
   updateBooked() {
-    this.setState(prev => ({ isBooked: !prev.isBooked }));
+    
   }
   
   handleDateChange = date => {

@@ -38,7 +38,7 @@ function ApplicationBar(props) {
     <div className={classes.root}>
       <AppBar position="static" color="default">
         <Toolbar>
-        <img src="http://images.sofology.co.uk/image/upload/v1449497925/Sofology/Brand/cluster-logo.png" alt="" width="20" />
+        
           <div className={classes.flex}>
             <Typography variant="title" color="primary" className={classes.title}>
               Delivery Management
