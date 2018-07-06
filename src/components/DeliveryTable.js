@@ -1,8 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+
 import { withStyles } from '@material-ui/core/styles';
-// import { withTheme } from '@material-ui/core/styles';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,17 +15,16 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-// import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import Delete from '@material-ui/icons/Delete';
 // import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-import SearchBar from 'material-ui-search-bar';
 
-// import EditDialog from './EditDialog';
+import SearchBar from 'material-ui-search-bar';
 import ConfirmDialog from './ConfirmationDialog';
 import DeliveryRow from './DeliveryRow';
+
 
 let counter = 0;
 function createData(consignment, order_ref, bookable, booked, booked_date) {
@@ -37,21 +37,6 @@ function getSorting(order, orderBy) {
     ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
     : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1);
 }
-
-
-
-// const TableCell = withStyles(theme => ({
-//   head: {
-//     backgroundColor: theme.palette.common.black,
-//     color: theme.palette.common.white,
-//   },
-//   body: {
-//     fontSize: 24,
-//   },
-// }))(TableCell);
-
-
-
 
 
 const columnData = [
@@ -228,7 +213,6 @@ class EnhancedTable extends React.Component {
       order: 'asc',
       orderBy: 'order_ref',
       selected: [],
-      fizz: 'fizz',
       data: [
         createData('THC123789', '123456/1', true, true, '01/01/2018'),
         createData('THC123789', '159351/3', true, false, null),
@@ -256,9 +240,7 @@ class EnhancedTable extends React.Component {
   
   
   deleteBookingAction(event, selected) {
-    console.log('clicked');
-    this.conDia.handleClickOpen();
-    console.log(selected);
+    this.conDia.handleClickOpen(selected);
   }
 
   handleRequestSort = (event, property) => {
@@ -329,6 +311,7 @@ class EnhancedTable extends React.Component {
     return (
       
       <Paper className={classes.root}>
+        
         <EnhancedTableToolbar numSelected={selected.length} action={event => this.deleteBookingAction(event, selected)}  />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
@@ -384,7 +367,6 @@ class EnhancedTable extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
-      <pre>{JSON.stringify(this.state.selected, null, 2)}</pre> 
       <ConfirmDialog ref={conDia => this.conDia = conDia} selected={this.state.newSelected}/>
       </Paper>
       

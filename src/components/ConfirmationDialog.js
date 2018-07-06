@@ -64,7 +64,6 @@ class ConfirmDialog extends React.Component {
 
   handleOk = () => {
     this.props.onClose(this.state.value);
-    console.log('confirm')
   };
   
   handleClose = () => {
@@ -76,9 +75,8 @@ class ConfirmDialog extends React.Component {
   };
 
   render() {
-    const { classes, onClose, selectedValue,  ...other } = this.props;
-    // const bookedDate = this.props.booked_date;
-    console.log([this.state]);
+    const { classes, onClose, selectedValue, selected,  ...other } = this.props;
+
     return (
       <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other} TransitionComponent={Transition}>
         <DialogTitle id="simple-dialog-title" className={this.props.classes.root}>Confirm action</DialogTitle>
@@ -90,7 +88,7 @@ class ConfirmDialog extends React.Component {
           </Typography>
         </DialogContent>
         <DialogActions className={this.props.classes.dActions}>
-          <Button onClick={this.handleOk} variant="contained" color="primary" className={classes.button}>
+          <Button onClick={() => this.handleOk(selected)} variant="contained" color="primary" className={classes.button}>
             Confirm
             <Check className={classes.rightIcon} />
           </Button>
@@ -118,18 +116,18 @@ class ConfirmDialogComponent extends React.Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
+    this.state = {
+      selected: [],
+      open: false
+    }
   }
-  
-  state = {
-    open: false,
-    // selectedValue: emails[1],
-  };
 
-  handleClickOpen = () => {
+  handleClickOpen = (selected) => {
     this.setState({
       open: true,
-      selected: this.props.selected
+      selected: selected
     });
+    console.log('handleClickOpen: ' + selected);
   };
 
   handleClose = value => {
@@ -139,10 +137,12 @@ class ConfirmDialogComponent extends React.Component {
   render() {
     return (
       <div>
+        
         <ConfirmDialogWrapped
           selectedValue={this.state.selectedValue}
           open={this.state.open}
           onClose={this.handleClose}
+          selected={this.state.selected}
         />
       </div>
     );
