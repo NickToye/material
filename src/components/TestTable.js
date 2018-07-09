@@ -136,6 +136,4 @@ class TestTable extends React.Component {
   }
 }
 
-
-
 export default TestTable;
