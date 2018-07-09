@@ -1,51 +1,12 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import MUIDataTable from 'mui-datatables';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 import DatePicker from 'material-ui-pickers/DatePicker';
-import lightBlue from '@material-ui/core/colors/lightBlue';
 
-const materialTheme = createMuiTheme({
-  overrides: {
-    MuiPickersToolbar: {
-      toolbar: {
-        backgroundColor: lightBlue.A200,
-      },
-    },
-    MuiPickersCalendarHeader: {
-      switchHeader: {
-        // backgroundColor: lightBlue.A200,
-        // color: 'white',
-      },
-    },
-    MuiInput: {
-      root: {
-        fontSize: '13'
-      }
-    },
-    MuiPickersDay: {
-      day: {
-        color: lightBlue.A700,
-      },
-      selected: {
-        backgroundColor: lightBlue['400'],
-      },
-      current: {
-        color: lightBlue['900'],
-      },
-    },
-    MuiPickersModal: {
-      dialogAction: {
-        color: lightBlue['400'],
-      },
-    },
-  },
-});
 
 class TestTable extends React.Component {
   
@@ -113,7 +74,7 @@ class TestTable extends React.Component {
           customRender: (value) => {
             return (
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <MuiThemeProvider theme={materialTheme}>
+                
                   <div className="picker">
                     <DatePicker 
                       keyboard
@@ -124,7 +85,8 @@ class TestTable extends React.Component {
                       InputProps={{ disableUnderline: true }}
                     />
                   </div>
-                </MuiThemeProvider>
+                  
+                
               </MuiPickersUtilsProvider>
             )
           }
@@ -162,12 +124,14 @@ class TestTable extends React.Component {
     };
     
     return (
-      <MUIDataTable 
-        title={'Delivery Management'} 
-        data={data} 
-        columns={columns} 
-        options={options} 
-      />
+      
+        <MUIDataTable 
+          title={'Delivery Management'} 
+          data={data} 
+          columns={columns} 
+          options={options} 
+        />
+      
     );
   }
 }

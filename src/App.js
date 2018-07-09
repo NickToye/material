@@ -10,13 +10,6 @@ import TestTable from './components/TestTable';
 
 
 const theme = createMuiTheme({
-  overrides: {
-      MUIButtonBase: {
-        root: {
-          backgroundColor: "#FF0000"
-        }
-      }
-    },
   palette: {
     primary: {
       light: '#3384F3',
@@ -36,6 +29,20 @@ const theme = createMuiTheme({
     },
     
   },
+  overrides: {
+    MUIDataTableSelectCell: {
+
+      checkboxRoot: {
+
+        '&$checked': {
+          color: '#1e90e5'
+        }
+      },
+
+
+    }
+  }
+  
 });
 
 
