@@ -83,7 +83,22 @@ class DeliveryManagementTable extends React.Component {
           filter: true,
           customRender: (value, handleDateChange) => {
             return (
-              <div>Test</div>
+              <MuiPickersUtilsProvider utils={LuxonUtils}>
+                
+                  <div className="picker">
+                    <DatePicker 
+                      keyboard
+                      clearable
+                      format="DDD"
+                      value={value}
+                      
+                      onChange={this.handleDateChange.bind(value)}
+                      InputProps={{ disableUnderline: true }}
+                    />  
+                  </div>
+                  
+                
+              </MuiPickersUtilsProvider>
             )
           }
         }

@@ -1,8 +1,9 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import AddIcon from "@material-ui/icons/Add";
+// import AddIcon from "@material-ui/icons/Add";
 import Avatar from '@material-ui/core/Avatar';
+import AccountMenu from './AccountMenu';
 import { withStyles } from "@material-ui/core/styles";
 
 const defaultToolbarStyles = {
@@ -19,10 +20,10 @@ class CustomToolbar extends React.Component {
 
     return (
       <React.Fragment>
-        <Tooltip title={"custom icon"}>
+        <Tooltip title={"Account Menu"}>
           <IconButton className={classes.iconButton} onClick={this.handleClick}>
-            <AddIcon className={classes.deleteIcon} />
-            
+            <Avatar alt="Nick Toye" src="https://lh3.googleusercontent.com/-09zlnLAagT4/Wlxpk_-dHGI/AAAAAAAACkg/ukSgWEqq6PEWymiCeWfY_5qY5VjrPi8lwCEwYBhgL/w280-h280-p/familyguy.png" className={classes.avatar} />
+            <AccountMenu />
           </IconButton>
         </Tooltip>
       </React.Fragment>
