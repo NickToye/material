@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-// import DeliveryTable from './components/DeliveryTable';
-// import ApplicationBar from './components/ApplicationBar';
-import TestTable from './components/TestTable';
+import DeliveryManagementTable from './components/DeliveryManagementTable';
 
 
 
@@ -30,9 +28,7 @@ const theme = createMuiTheme({
     
   },
   overrides: {
-    root: {
-      backgroundColor: 'pink'
-    },
+    
     MUIDataTableSelectCell: {
       checkboxRoot: {
         '&$checked': {
@@ -71,9 +67,7 @@ render() {
             <MuiThemeProvider theme={theme}>
               <CssBaseline />
                 <div style={{ padding: 20 }}>   
-                  <TestTable />   
-                  
-                  
+                  <DeliveryManagementTable />   
                 </div>
             </MuiThemeProvider>
           

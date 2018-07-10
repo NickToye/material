@@ -51,7 +51,7 @@ class TestTable extends React.Component {
                   updateValue(
                     event.target.value === 'Yes' ? false : true
                   );
-                  console.log('fizz')
+                  
                 }}
               />
             );
@@ -67,7 +67,7 @@ class TestTable extends React.Component {
               <FormControlLabel
                 value={value ? 'Yes' : 'No'}
                 control={
-                  <Checkbox color="primary" checked={value} disabled/>
+                  <Checkbox color="primary" checked={value} />
                 }
                 onChange={event => {
                   updateValue(event.target.value === 'Yes' ? false : true);
