@@ -41,14 +41,14 @@ const theme = createMuiTheme({
         fontSize: 13
       }
     },
-    MuiSvgIcon: {
-      root: {
-        color: 'primary',
-      },
-    },
     MuiInput: {
       root: {
         fontSize: 13
+      }
+    },
+    MUIDataTableToolbarSelect: {
+      root: {
+        backgroundColor: 'pink'
       }
     }
     

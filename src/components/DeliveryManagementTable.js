@@ -1,14 +1,14 @@
 import React from 'react';
 import MUIDataTable from 'mui-datatables';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-
+import CustomToolbar from "./CustomToolbar";
 import Checkbox from '@material-ui/core/Checkbox';
 import LuxonUtils from 'material-ui-pickers/utils/luxon-utils';
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 import DatePicker from 'material-ui-pickers/DatePicker';
 
 
-class TestTable extends React.Component {
+class DeliveryManagementTable extends React.Component {
   
   
   
@@ -83,23 +83,7 @@ class TestTable extends React.Component {
           filter: true,
           customRender: (value, handleDateChange) => {
             return (
-              <MuiPickersUtilsProvider utils={LuxonUtils}>
-                
-                  <div className="picker">
-                    <DatePicker 
-                      keyboard
-                      clearable
-                      showTodayButton
-                      format="DDD"
-                      value={value}
-                      
-                      onChange={this.handleDateChange.bind(value)}
-                      InputProps={{ disableUnderline: true }}
-                    />  
-                  </div>
-                  
-                
-              </MuiPickersUtilsProvider>
+              <div>Test</div>
             )
           }
         }
@@ -117,21 +101,25 @@ class TestTable extends React.Component {
 
     const options = {
       filter: true,
+      selectableRows: true,
       filterType: 'dropdown',
-      responsive: 'stacked'
+      responsive: 'scroll',
+      rowsPerPage: 10,
+      pagination: true,
+      customToolbar: () => {
+        return <CustomToolbar />;
+      }
     };
     
     return (
-      
         <MUIDataTable 
           title={'Delivery Management'} 
           data={data} 
           columns={columns} 
           options={options} 
         />
-      
     );
   }
 }
 
-export default TestTable;
+export default DeliveryManagementTable;
