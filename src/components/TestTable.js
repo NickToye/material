@@ -3,16 +3,23 @@ import MUIDataTable from 'mui-datatables';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import Checkbox from '@material-ui/core/Checkbox';
-import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
+import LuxonUtils from 'material-ui-pickers/utils/luxon-utils';
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 import DatePicker from 'material-ui-pickers/DatePicker';
 
 
 class TestTable extends React.Component {
   
-  handleDateChange = date => {
-    this.setState({ bookedDate: date });
+  
+  
+  handleDateChange = (value) => {
+    
+    this.setState({
+      newValue: value
+    });
   };
+  
+  
 
   render() {
     
@@ -41,7 +48,10 @@ class TestTable extends React.Component {
                   <Checkbox color="primary" checked={value} />
                 }
                 onChange={event => {
-                  updateValue(event.target.value === 'Yes' ? false : true);
+                  updateValue(
+                    event.target.value === 'Yes' ? false : true
+                  );
+                  console.log('fizz')
                 }}
               />
             );
@@ -57,7 +67,7 @@ class TestTable extends React.Component {
               <FormControlLabel
                 value={value ? 'Yes' : 'No'}
                 control={
-                  <Checkbox color="primary" checked={value} />
+                  <Checkbox color="primary" checked={value} disabled/>
                 }
                 onChange={event => {
                   updateValue(event.target.value === 'Yes' ? false : true);
@@ -71,19 +81,21 @@ class TestTable extends React.Component {
         name: 'Booked Date',
         options: {
           filter: true,
-          customRender: (value) => {
+          customRender: (value, handleDateChange) => {
             return (
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <MuiPickersUtilsProvider utils={LuxonUtils}>
                 
                   <div className="picker">
                     <DatePicker 
                       keyboard
-                      clearable 
-                      format="Do MMM YYYY" 
-                      value={value} 
-                      onChange={this.handleDateChange} 
+                      clearable
+                      showTodayButton
+                      format="DDD"
+                      value={value}
+                      
+                      onChange={this.handleDateChange.bind(value)}
                       InputProps={{ disableUnderline: true }}
-                    />
+                    />  
                   </div>
                   
                 
@@ -95,26 +107,12 @@ class TestTable extends React.Component {
     ];
     
     const data = [
-      ['THC123789', '123456/1', true, true, '01/01/2018'],
+      ['THC123789', '123456/1', true, true, '2018-01-01'],
       ['THC123789', '159351/3', true, false, ''],
-      ['BVR9845', '789456/1', true, true, '2/01/2018'],
+      ['BVR9845', '789456/1', true, true, '2018-02-05'],
       ['MBN2291', '693825/1', false, false, ''],
-      ['THC123789', '123456/1', true, true, '01/01/2018'],
+      ['THC123789', '123456/1', true, true, '2018-01-03'],
       ['THC123789', '159351/3', true, false, ''],
-      ['BVR9845', '789456/1', true, true, '02/01/2018'],
-      ['MBN2291', '693825/1', false, false, ''],
-      ['THC123789', '123456/1', true, true, '01/01/2018'],
-      ['THC123789', '159351/3', true, false, ''],
-      ['BVR9845', '789456/1', true, true, '02/01/2018'],
-      ['MBN2291', '693825/1', false, false, ''],
-      ['THC123789', '123456/1', true, true, '01/01/2018'],
-      ['THC123789', '159351/3', true, false, ''],
-      ['BVR9845', '789456/1', true, true, '02/01/2018'],
-      ['MBN2291', '693825/1', false, false, ''],
-      ['THC123789', '123456/1', true, true, '01/01/2018'],
-      ['THC123789', '159351/3', true, false, ''],
-      ['BVR9845', '789456/1', true, true, '02/01/2018'],
-      ['MBN2291', '693825/1', false, false, '']
     ];
 
     const options = {

@@ -30,17 +30,32 @@ const theme = createMuiTheme({
     
   },
   overrides: {
+    root: {
+      backgroundColor: 'pink'
+    },
     MUIDataTableSelectCell: {
-
       checkboxRoot: {
-
         '&$checked': {
           color: '#1e90e5'
         }
       },
-
-
+    },
+    MuiMenuItem: {
+      root: {
+        fontSize: 13
+      }
+    },
+    MuiSvgIcon: {
+      root: {
+        color: 'primary',
+      },
+    },
+    MuiInput: {
+      root: {
+        fontSize: 13
+      }
     }
+    
   }
   
 });
