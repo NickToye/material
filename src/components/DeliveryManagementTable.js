@@ -9,19 +9,7 @@ import DatePicker from 'material-ui-pickers/DatePicker';
 
 
 
-class DeliveryManagementTable extends React.Component {
-  
-  
-  
-  handleDateChange = (value) => {
-    
-    this.setState({
-      newValue: value
-    });
-  };
-  
-  
-  
+class DeliveryManagementTable extends React.Component {  
 
   render() {
     
@@ -83,7 +71,7 @@ class DeliveryManagementTable extends React.Component {
         name: 'Booked Date',
         options: {
           filter: true,
-          customRender: (value, handleDateChange) => {
+          customRender: (value, key, updateDate) => {
             return (
               <MuiPickersUtilsProvider utils={LuxonUtils}>
                 
@@ -93,10 +81,11 @@ class DeliveryManagementTable extends React.Component {
                       clearable
                       format="DDD"
                       value={value}
-                      
-                      onChange={this.handleDateChange.bind(value)}
+                      onChange={event => updateDate(event)}
                       InputProps={{ disableUnderline: true }}
-                    />  
+                    />
+                    
+                    
                   </div>
                   
                 
@@ -108,6 +97,18 @@ class DeliveryManagementTable extends React.Component {
     ];
     
     const data = [
+      ['THC123789', '123456/1', true, true, '2018-01-01'],
+      ['THC123789', '159351/3', true, false, ''],
+      ['BVR9845', '789456/1', true, true, '2018-02-05'],
+      ['MBN2291', '693825/1', false, false, ''],
+      ['THC123789', '123456/1', true, true, '2018-01-03'],
+      ['THC123789', '159351/3', true, false, ''],
+      ['THC123789', '123456/1', true, true, '2018-01-01'],
+      ['THC123789', '159351/3', true, false, ''],
+      ['BVR9845', '789456/1', true, true, '2018-02-05'],
+      ['MBN2291', '693825/1', false, false, ''],
+      ['THC123789', '123456/1', true, true, '2018-01-03'],
+      ['THC123789', '159351/3', true, false, ''],
       ['THC123789', '123456/1', true, true, '2018-01-01'],
       ['THC123789', '159351/3', true, false, ''],
       ['BVR9845', '789456/1', true, true, '2018-02-05'],
@@ -135,6 +136,7 @@ class DeliveryManagementTable extends React.Component {
           data={data} 
           columns={columns} 
           options={options} 
+          
         />
         </div>
     );
