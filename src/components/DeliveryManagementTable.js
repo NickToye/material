@@ -8,11 +8,17 @@ import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsPr
 import DatePicker from 'material-ui-pickers/DatePicker';
 
 
-
-class DeliveryManagementTable extends React.Component {  
+class DeliveryManagementTable extends React.Component {
+  
+  
+  
+  
+  
+  
+  
+  
 
   render() {
-    
     const columns = [
       {
         name: 'Consignment',
@@ -30,16 +36,17 @@ class DeliveryManagementTable extends React.Component {
         name: 'Bookable',
         options: {
           filter: false,
-          customRender: (value, tableMeta, updateValue) => {
+          customRender: (value, tableMeta, updateValue, key) => {
             return (
               <FormControlLabel
                 value={value ? 'Yes' : 'No'}
                 control={
                   <Checkbox color="primary" checked={value} />
                 }
-                onChange={event => {
+                onChange={(event, key) => {
                   updateValue(
-                    event.target.value === 'Yes' ? false : true
+                    event.target.value === 'Yes' ? false : true,
+                    console.log(event.target)
                   );
                   
                 }}
@@ -71,20 +78,19 @@ class DeliveryManagementTable extends React.Component {
         name: 'Booked Date',
         options: {
           filter: true,
-          customRender: (value, key, updateDate) => {
+          customRender: (value, event, updateDate, today) => {
             return (
+              
               <MuiPickersUtilsProvider utils={LuxonUtils}>
                 
                   <div className="picker">
                     <DatePicker 
                       keyboard
-                      clearable
                       format="DDD"
                       value={value}
                       onChange={event => updateDate(event)}
                       InputProps={{ disableUnderline: true }}
                     />
-                    
                     
                   </div>
                   
@@ -103,18 +109,18 @@ class DeliveryManagementTable extends React.Component {
       ['MBN2291', '693825/1', false, false, ''],
       ['THC123789', '123456/1', true, true, '2018-01-03'],
       ['THC123789', '159351/3', true, false, ''],
+      ['THC123789', '123456/1', false, true, '2018-01-01'],
+      ['THC123789', '159351/3', true, false, ''],
+      ['BVR9845', '789456/1', true, true, '2018-02-05'],
+      ['MBN2291', '693825/1', false, false, ''],
+      ['THC123789', '123456/1', true, true, '2018-01-03'],
+      ['THC123789', '159351/3', false, false, ''],
       ['THC123789', '123456/1', true, true, '2018-01-01'],
       ['THC123789', '159351/3', true, false, ''],
       ['BVR9845', '789456/1', true, true, '2018-02-05'],
       ['MBN2291', '693825/1', false, false, ''],
       ['THC123789', '123456/1', true, true, '2018-01-03'],
-      ['THC123789', '159351/3', true, false, ''],
-      ['THC123789', '123456/1', true, true, '2018-01-01'],
-      ['THC123789', '159351/3', true, false, ''],
-      ['BVR9845', '789456/1', true, true, '2018-02-05'],
-      ['MBN2291', '693825/1', false, false, ''],
-      ['THC123789', '123456/1', true, true, '2018-01-03'],
-      ['THC123789', '159351/3', true, false, ''],
+      ['THC123789', '159351/3', false, false, ''],
     ];
 
     const options = {
@@ -124,6 +130,7 @@ class DeliveryManagementTable extends React.Component {
       responsive: 'scroll',
       rowsPerPage: 10,
       pagination: true,
+      
       customToolbar: () => {
         return <CustomToolbar />;
       }

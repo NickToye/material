@@ -59,6 +59,14 @@ const theme = createMuiTheme({
         color: 'white'
       }
     },
+    MuiBottomNavigationAction: {
+      root: {
+        backgroundColor: 'blue',
+        '&$selected': {
+          color: 'red'
+        }
+      }
+    }
     
     
   }
