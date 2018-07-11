@@ -1,29 +1,33 @@
 import React from "react";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
+// import IconButton from "@material-ui/core/IconButton";
+// import Tooltip from "@material-ui/core/Tooltip";
 // import AddIcon from "@material-ui/icons/Add";
 
 import AccountMenu from './AccountMenu';
 import { withStyles } from "@material-ui/core/styles";
 
-const defaultToolbarStyles = {
-  iconButton: {}
-};
+const defaultToolbarStyles = theme => ({
+  iconButton: {
+    marginLeft: theme.spacing.unit * 3
+  },
+  inline: {
+    display: "inline"
+  }
+});
 
 class CustomToolbar extends React.Component {
   handleClick = () => {
     console.log("clicked on icon!");
-    
   };
 
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
 
     return (
       <React.Fragment>
-          <IconButton className={classes.iconButton} onClick={this.handleClick}>
-            <AccountMenu />
-          </IconButton>
+      <AccountMenu />
+
+        
       </React.Fragment>
     );
   }

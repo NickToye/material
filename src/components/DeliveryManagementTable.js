@@ -8,6 +8,7 @@ import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsPr
 import DatePicker from 'material-ui-pickers/DatePicker';
 
 
+
 class DeliveryManagementTable extends React.Component {
   
   
@@ -18,6 +19,7 @@ class DeliveryManagementTable extends React.Component {
       newValue: value
     });
   };
+  
   
   
 
@@ -127,12 +129,14 @@ class DeliveryManagementTable extends React.Component {
     };
     
     return (
+      <div>
         <MUIDataTable 
           title={'Delivery Management'} 
           data={data} 
           columns={columns} 
           options={options} 
         />
+        </div>
     );
   }
 }

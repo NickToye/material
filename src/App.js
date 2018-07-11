@@ -4,6 +4,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import DeliveryManagementTable from './components/DeliveryManagementTable';
+// import BottomNav from "./components/BottomNav";
 
 
 
@@ -48,9 +49,17 @@ const theme = createMuiTheme({
     },
     MUIDataTableToolbarSelect: {
       root: {
-        backgroundColor: 'pink'
+        backgroundColor: '#1e90e5',
+        color: 'white'
+      },
+      title: {
+        color: 'white'
+      },
+      deleteIcon: {
+        color: 'white'
       }
-    }
+    },
+    
     
   }
   
@@ -67,7 +76,7 @@ render() {
             <MuiThemeProvider theme={theme}>
               <CssBaseline />
                 <div style={{ padding: 20 }}>   
-                  <DeliveryManagementTable />   
+                  <DeliveryManagementTable />
                 </div>
             </MuiThemeProvider>
           

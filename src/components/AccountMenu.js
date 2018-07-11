@@ -4,12 +4,15 @@ import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 // import MoreVertIcon from '@material-ui/icons/MoreVert';
-// import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
   menuItem: {
     fontSize: 14
+  },
+  inline: {
+    display: "inline"
   }
 });
 
@@ -31,13 +34,19 @@ class AccountMenu extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
-
-          <Avatar aria-owns={anchorEl ? 'simple-menu' : null}
+      <div className={classes.inline}>
+        <IconButton
+          aria-owns={anchorEl ? 'simple-menu' : null}
           aria-haspopup="true"
-          onClick={this.handleClick}
-          alt="Nick Toye" src="https://lh3.googleusercontent.com/-09zlnLAagT4/Wlxpk_-dHGI/AAAAAAAACkg/ukSgWEqq6PEWymiCeWfY_5qY5VjrPi8lwCEwYBhgL/w280-h280-p/familyguy.png" className={classes.avatar} />
+          onClick={this.handleClick}>
+          
+          <div className={classes.inline}>
+            <Avatar alt="Nick Toye" src="https://lh3.googleusercontent.com/-09zlnLAagT4/Wlxpk_-dHGI/AAAAAAAACkg/ukSgWEqq6PEWymiCeWfY_5qY5VjrPi8lwCEwYBhgL/w280-h280-p/familyguy.png" className={classes.avatar} />
+            
+          </div>
+          
 
+        </IconButton>
 
         <Menu
           id="simple-menu"
