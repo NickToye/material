@@ -57,8 +57,16 @@ const theme = createMuiTheme({
       },
       deleteIcon: {
         color: 'white'
+      },
+      
+      
+    },
+    MuiFormControlLabel: {
+      label: {
+        color: "inherit"
       }
     },
+    
     MuiBottomNavigationAction: {
       root: {
         backgroundColor: 'blue',

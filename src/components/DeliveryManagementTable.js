@@ -2,6 +2,7 @@ import React from 'react';
 import MUIDataTable from 'mui-datatables';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CustomToolbar from "./CustomToolbar";
+import CustomToolbarSelect from "./CustomToolbarSelect";
 import Checkbox from '@material-ui/core/Checkbox';
 import LuxonUtils from 'material-ui-pickers/utils/luxon-utils';
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
@@ -9,14 +10,7 @@ import DatePicker from 'material-ui-pickers/DatePicker';
 
 
 class DeliveryManagementTable extends React.Component {
-  
-  
-  
-  
-  
-  
-  
-  
+
 
   render() {
     const columns = [
@@ -35,7 +29,7 @@ class DeliveryManagementTable extends React.Component {
       {
         name: 'Bookable',
         options: {
-          filter: false,
+          filter: true,
           customRender: (value, tableMeta, updateValue, key) => {
             return (
               <FormControlLabel
@@ -43,13 +37,7 @@ class DeliveryManagementTable extends React.Component {
                 control={
                   <Checkbox color="primary" checked={value} />
                 }
-                onChange={(event, key) => {
-                  updateValue(
-                    event.target.value === 'Yes' ? false : true,
-                    console.log(event.target)
-                  );
-                  
-                }}
+                
               />
             );
           }
@@ -58,7 +46,7 @@ class DeliveryManagementTable extends React.Component {
       {
         name: 'Booked',
         options: {
-          filter: false,
+          filter: true,
           customRender: (value, tableMeta, updateValue) => {
             return (
               <FormControlLabel
@@ -66,9 +54,7 @@ class DeliveryManagementTable extends React.Component {
                 control={
                   <Checkbox color="primary" checked={value} />
                 }
-                onChange={event => {
-                  updateValue(event.target.value === 'Yes' ? false : true);
-                }}
+                
               />
             );
           }
@@ -133,6 +119,9 @@ class DeliveryManagementTable extends React.Component {
       
       customToolbar: () => {
         return <CustomToolbar />;
+      },
+      customToolbarSelect: () => {
+        return <CustomToolbarSelect />;
       }
     };
     
